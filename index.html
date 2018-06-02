@@ -1,7 +1,118 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<head>
+    <meta charset="utf-8">
+    <meta name="port" content="width=device-width, initial-scale=1">
+    <title>index</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="TweenMax.min.js"></script>
+    <script src="../app.js"></script>
+</head>
+<body id="#page1">
+<main>
+    <div id="frame">
+        <div id="opening">
+            <div id="text_anime">
+                <span>H</span>
+                <span>e</span>
+                <span>l</span>
+                <span>l</span>
+                <span>o</span>
+                <span>&nbsp;</span>
+                <span>T</span>
+                <span>h</span>
+                <span>e</span>
+                <span>r</span>
+                <span>e</span>
+            </div>
+            <div id="text_mask">
+                <div id="text_top">
+                    <div id="top_sq"></div>
+                    <div id="top_line"></div>
+                </div>
+                <div id="text_bottom">
+                    <div id="bottom_sq"></div>
+                    <div id="bottom_line"></div>
+                </div>
+            </div>
+        </div>
+        <div id="main_content">
+            <div class="box-line" id="animation">
+                <ul class="list">
+                    <li class="page-link"><a href="index.html"> home </a></li>
+                    <li class="page-link"><a href="about.html"> about </a></li>
+                    <li class="page-link"><a href="project.html"> project </a></li>
+                    <li class="page-link1"><a href="contact.html"> contact </a></li>
+                </ul>
+
+                <ul class="fly-in-text hidden">
+                    <li>K</li>
+                    <li>A</li>
+                    <li>N</li>
+                    <li>A</li>
+                    <li>T</li>
+                    <li>A</li>
+                    <br>
+                    <li>S</li>
+                    <li>H</li>
+                    <li>I</li>
+                    <li>M</li>
+                    <li>O</li>
+                    <li>M</li>
+                    <li>O</li>
+                    <li>T</li>
+                    <li>O</li>
+                </ul>
+                <p class="frontend">-Front-end Developer-</p>
+            </div>
+        </div>
+        <div id="v_left"></div>
+        <div id="v_right"></div>
+    </div>
+
+</main>
+
+<script>
+    var $opening = $("#opening"),
+        $text = $("#text_anime span"),
+        $top = $("#text_top"),
+        $bottom = $("#text_bottom"),
+        $top_sq = $("#top_sq"),
+        $top_line = $("#top_line"),
+        $bottom_sq = $("#bottom_sq"),
+        $bottom_line = $("#bottom_line"),
+        $v_left = $("#v_left"),
+        $v_right = $("#v_right"),
+        $main = $("#main_content"),
+        tl_opening = new TimelineLite();
+
+    tl_opening
+        .staggerFrom(
+            $text,
+            0.5,
+            {
+                top: "+=25px",
+                rotation: "-=-3deg",
+                alpha: 0,
+                scale: 0.8,
+                ease: Power1.easeOut
+            },
+            0.04
+        )
+        .from($top_sq, 1, { y: -100, alpha: 0, ease: Bounce.easeOut, delay: 0.4 })
+        .from($bottom_sq, 1, { y: 100, alpha: 0, ease: Bounce.easeOut }, "-=1")
+        .from([$top_line, $bottom_line], 0.5, { width: 0, ease: Power4.easeOut })
+        .to([$top_sq, $bottom_sq], 0.1, { display: "none" })
+        .to([$top, $bottom], 0.5, { height: "50%", ease: Power1.easeIn })
+        .to($top_line, 0.1, { display: "none" }, "-=0.1")
+        .to($bottom_line, 0.1, { rotation: -90, ease: Power1.easeIn }, "+=0.1")
+        .from([$v_left, $v_right], 0.02, { display: "none" })
+        .to($opening, 0.02, { display: "none" })
+        .to($main, 0.02, { display: "block" })
+        .to([$v_left, $v_right], 0.6, { width: 0, ease: Expo.easeOut });
+</script>
+
+
 </body>
 </html>

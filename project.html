@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="TweenMax.min.js"></script>
+    <script src="../app.js"></script>
+    <script type="text/javascript"></script>
+</head>
+<body id="page3">
+<main>
+    <!--<div class="box">-->
+    <div class="box-line" id="animation">
+        <!--<div id="fading">-->
+            <ul class="list">
+                <li class="page-link"><a href="index.html"> home </a></li>
+                <li class="page-link"><a href="about.html"> about </a></li>
+                <li class="page-link"><a href="project.html"> project </a></li>
+                <li class="page-link1"><a href="contact.html"> contact </a></li>
+            </ul>
+    <p class="workTitle">My Latest Work</p>
+            <div class="slide active">
+                <div class="card">
+                    <div class="card__img" id="img01"></div>
+                    <div class="card__content">
+                        <p class="card__content-theme">HTML/SCSS/JavaScript</p>
+                        <h2 class="card__content-header">Morinda</h2>
+                        <p class="card__content-paragraph">I made a website of my friends who is director in Japan. And I used HTML, CSS(SCSS), Javascript. In making this work, I made focused on SCSS and what his client want and know about his company and him.</p><a class="card__content-link" href="#">Visit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="card">
+                    <div class="card__img" id="img02"></div>
+                    <div class="card__content">
+                        <p class="card__content-theme">React Application</p>
+                        <h2 class="card__content-header">Weather Finder</h2>
+                        <p class="card__content-paragraph">This project was kind of challenging things for me since it was first time to use React. I've been continued learning this language and am going to make other app with React.</p><a class="card__content-link" href="#">Visit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="card">
+                    <div class="card__img" id="img03"></div>
+                    <div class="card__content">
+                        <p class="card__content-theme">AngularJS & Firebase Application</p>
+                        <h2 class="card__content-header">Simple Todo List</h2>
+                        <p class="card__content-paragraph">I used AngularJS and firebase. This project was just I wanted to know what I can do with AngularJS and I am going to continue improving this app and learning Angular as well.</p><a class="card__content-link" href="#">Visit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="prevnext">
+                <button class="prevnext-button" id="prev"></button>
+                <button class="prevnext-button" id="next"></button>
+            </div>
+            <!--</div>-->
+        </div>
+    <!--</div>-->
+</main>
+
+<script>
+    var $activeSlide = $(".active"),
+        $homeSlide = $(".slide"),
+        $slideNavPrev = $("#prev"),
+        $slideNavNext = $("#next");
+
+
+    function init(){
+        TweenMax.set($homeSlide.not($activeSlide), {autoAlpha: 0});
+        TweenMax.set($slideNavPrev, {autoAlpha: 0.2});
+    }
+
+    init();
+
+    function goToNextSlide(slideOut, slideIn, slideInAll){
+        var tl = new TimelineLite(),
+            slideOutContent = slideOut.find('.card__content'),
+            slideInContent = slideIn.find('.card__content'),
+            slideOutImg = slideOut.find('.card__img'),
+            slideInImg = slideIn.find('.card__img'),
+            index = slideIn.index(),
+            size = $homeSlide.length;
+        console.log(index);
+
+        if(slideIn.length !== 0){
+
+            tl
+                .set(slideIn, {autoAlpha: 1, className: '+=active'})
+                .set(slideOut, {className: '-=active'})
+                .to(slideOutContent, 0.65, {y: '+=40px', ease:Power3.easeInOut}, 0)
+                .to(slideOutImg, 0.65, {backgroundPosition: 'bottom', ease:Power3.easeInOut}, 0)
+                .to(slideInAll, 1, {y: '-=100%', ease:Power3.easeInOut}, 0)
+                .fromTo(slideInContent, 0.65, {y: '-=40px'}, {y: 0, ease:Power3.easeInOut}, "-=0.7")
+                .fromTo(slideInImg, 0.65, {backgroundPosition: 'top'}, {backgroundPosition: 'bottom', ease:Power3.easeInOut}, "-=0.7")
+        }
+
+        TweenMax.set($slideNavPrev, {autoAlpha: 1});
+
+        if(index === size - 1){
+            TweenMax.to($slideNavNext, 0.3, {autoAlpha: 0.2, ease:Linear.easeNone});
+        }
+    };
+
+    $slideNavNext.click(function (e) {
+        e.preventDefault();
+
+        var slideOut = $('.slide.active'),
+            slideIn = $('.slide.active').next('.slide'),
+            slideInAll = $('.slide');
+
+        goToNextSlide(slideOut, slideIn, slideInAll);
+    });
+
+    function goToPreviousSlide(slideOut, slideIn, slideInAll){
+        var tl = new TimelineLite(),
+            slideOutContent = slideOut.find('.card__content'),
+            slideInContent = slideIn.find('.card__content'),
+            slideOutImg = slideOut.find('.card__img'),
+            slideInImg = slideIn.find('.card__img'),
+            index = slideIn.index(),
+            size = $homeSlide.length;
+
+        if(slideIn.length !== 0){
+
+            tl
+                .set(slideIn, {autoAlpha: 1, className: '+=active'})
+                .set(slideOut, {className: '-=active'})
+                .to(slideOutContent, 0.65, {y: '-=40px', ease:Power3.easeInOut}, 0)
+                .to(slideOutImg, 0.65, {backgroundPosition: 'top', ease:Power3.easeInOut}, 0)
+                .to(slideInAll, 1, {y: '+=100%', ease:Power3.easeInOut}, 0)
+                .fromTo(slideInContent, 0.65, {y: '+=40px'}, {y: 0, ease:Power3.easeInOut}, "-=0.7")
+                .fromTo(slideInImg, 0.65, {backgroundPosition: 'bottom'}, {backgroundPosition: 'top', ease:Power3.easeInOut}, "-=0.7")
+        }
+
+        TweenMax.set($slideNavNext, {autoAlpha: 1});
+
+        if(index === 0){
+            TweenMax.to($slideNavPrev, 0.3, {autoAlpha: 0.2, ease:Linear.easeNone});
+        }
+    };
+
+    $slideNavPrev.click(function (e) {
+        e.preventDefault();
+
+        var slideOut = $('.slide.active'),
+            slideIn = $('.slide.active').prev('.slide'),
+            slideInAll = $('.slide');
+
+        goToPreviousSlide(slideOut, slideIn, slideInAll);
+    });
+</script>
+
+
+</body>
+</html>
